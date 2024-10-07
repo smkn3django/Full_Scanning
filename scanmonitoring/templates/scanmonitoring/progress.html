@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Count Monitor</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<script>
+const sockett = new WebSocket('ws://127.0.0.1:8000/ws/files/');
+
+sockett.onopen = function(e) {
+    console.log("WebSocket connection established");
+};
+
+sockett.onerror = function(error) {
+    console.error("WebSocket error: ", error);
+};
+
+sockett.onmessage = function(event) {
+    const data = JSON.parse(event.data);
+    console.log("Data received from WebSocket:", data);
+};
+
+</script>
+<body>
+    <h1>Total Files Over Time</h1>
+    
+    <canvas id="fileCountChart" width="400" height="200"></canvas>
+
+    <script>
+        const ctx = document.getElementById('fileCountChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],  // Time labels
+                datasets: [{
+                    label: 'Total Files',
+                    data: [],  // File count data will be added dynamically
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    fill: false,
+                }]
+            }
+        });
+
+        const socket = new WebSocket('ws://localhost:8000/ws/files/');
+
+        socket.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            const totalFiles = data.total_files;  // Extract the total file count
+            const currentTime = new Date().toLocaleTimeString();  // Current time as label
+
+            console.log("Data received from WebSocket:", data);  // For debugging
+
+            // Add new data to the chart
+            chart.data.labels.push(currentTime);
+            chart.data.datasets[0].data.push(totalFiles);
+
+            // Update the chart
+            chart.update();
+        };
+    </script>
+</body>
+</html>
