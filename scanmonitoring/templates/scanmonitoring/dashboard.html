@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Document Monitoring Dashboard</h1>
+        
+        <!-- Cards for Monitoring -->
+        <div class="row">
+            {% for stat in stats %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Data at {{ stat.timestamp }}</h5>
+                            <p class="card-text">
+                                Total Files: {{ stat.total_files }}<br>
+                                Uncategories: {{ stat.total_uncategories }}<br>
+                                Large Files: {{ stat.total_large_file }}<br>
+                                Miss NIP: {{ stat.total_miss_nip }}<br>
+                                Not a PDF: {{ stat.total_not_a_pdf }}<br>
+                                Documents Proceeded: {{ stat.total_doc_proceed }}<br>
+                                Documents Uploaded: {{ stat.total_doc_uploaded }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Line Chart -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <canvas id="filesChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('filesChart').getContext('2d');
+            const filesChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [
+                        {% for data in chart_data %}
+                            "{{ data.timestamp|date:'Y-m-d H:i:s' }}",
+                        {% endfor %}
+                    ],
+                    datasets: [{
+                        label: 'Total Files Over Time',
+                        data: [
+                            {% for data in chart_data %}
+                                {{ data.total_files }},
+                            {% endfor %}
+                        ],
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 2,
+                        fill: false,
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            },
+                            title: {
+                                display: true,
+                                text: 'Date'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Total Files'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
