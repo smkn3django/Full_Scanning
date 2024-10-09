@@ -38,7 +38,7 @@ def api_top_ten(request):
 
 
 def monitoring_chart(request):
-    logs = MonitoringLog.objects.all().order_by('timestamp')
+    logs = MonitoringLog.objects.all().order_by('-timestamp')[:100][::-1]
     timestamps = [log.timestamp.strftime('%Y-%m-%d %H:%M:%S') for log in logs]
     total_files = [log.total_files for log in logs]
     total_uncategories =[log.total_uncategories for log in logs]
