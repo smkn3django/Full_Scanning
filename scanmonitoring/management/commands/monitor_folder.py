@@ -14,7 +14,7 @@ class Command(BaseCommand):
         source_miss_nip = 'Z:\\DOCUMENT_REJECTION\\MISS_NIP'
         source_not_a_pdf = 'Z:\\DOCUMENT_REJECTION\\NOT_A_PDF'
         source_doc_proceed = 'Z:\\DOCUMENT_APPROVED'
-        source_doc_uploaded ='Z:\\DOCUMENT_APPROVED'
+        source_doc_uploaded ='Z:\\DOCUMENT_UPLOADED'
 
         self.stdout.write(self.style.SUCCESS(f'Starting to monitor folder: {source_path}'))
 
@@ -29,15 +29,19 @@ class Command(BaseCommand):
             total_not_a_pdf = sum([len(files) for _, _, files in os.walk(source_not_a_pdf)])
             total_doc_proceed = sum([len(files) for _, _, files in os.walk(source_doc_proceed)])
             total_doc_uploaded = sum([len(files) for _, _, files in os.walk(source_doc_uploaded)])
+            # total_doc_approved = sum([len(files) for _, _, files in os.walk(source_doc_approved)])
 
             # Log the total files and the current time to the database
-            MonitoringLog.objects.create(total_files=total_files, total_uncategories = total_uncategories,
-                                         total_large_file=total_large_file,total_miss_nip=total_miss_nip,
-                                         total_not_a_pdf=total_not_a_pdf,total_doc_proceed=total_doc_proceed,
-                                         total_doc_uploaded=total_doc_uploaded  )
+            MonitoringLog.objects.create(total_files=total_files, 
+                                         total_uncategories = total_uncategories,
+                                         total_large_file=total_large_file,
+                                         total_miss_nip=total_miss_nip,
+                                         total_not_a_pdf=total_not_a_pdf,
+                                         total_doc_proceed=total_doc_proceed,
+                                         total_doc_uploaded=total_doc_uploaded)
 
             # Print a success message for each logging event
             self.stdout.write(self.style.SUCCESS(f'Total files: {total_files} at {time.strftime("%Y-%m-%d %H:%M:%S")}'))
 
             # Wait for 5 seconds before running the loop again
-            time.sleep(5)
+            time.sleep(1)

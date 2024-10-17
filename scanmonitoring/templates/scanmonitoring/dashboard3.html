@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -61,11 +63,11 @@
   </head>
   <body>
     <div class="container mt-5">
-      <h1 class="mb-4">Document Monitoring Dashboard</h1>
+      <h1 class="mb-4">Personal Progress Dashboard</h1>
 
       <!-- Cards for Monitoring -->
       <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-3">
           <div class="card card-custom card-blue">
             <div class="card-body">
               <h5 class="card-title">Total Files</h5>
@@ -74,26 +76,54 @@
           </div>
           <div class="card card-custom card-orange">
             <div class="card-body">
-              <h5 class="card-title">Documents Proceeded</h5>
-              <p class="card-text display-6">
-                {{ latest_stat.total_doc_proceed }}
-              </p>
+              <div class="row">
+                <div class="col-md-6">
+                  <img src="{% static 'scanmonitoring/img/ananda.jpeg' %}" alt="" style="height: 70px; width: 70px; border-radius: 50%; margin-left: 10px;">
+                  <h5 class="card-title" style="margin-left: 10px; margin-top: 5px;">Ananda</h5>
+                </div>
+                <div class="col-md-6">
+                  <h5>Total Files</h5>
+                  <p class="card-text display-6">
+                    {{ latest_personal.ananda }}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
           <div class="card card-custom card-green">
             <div class="card-body">
-              <h5 class="card-title">Documents Uploaded</h5>
-              <p class="card-text display-6">
-                {{ latest_stat.total_doc_uploaded}}
-              </p>
+              <div class="row">
+
+
+
+                
+                <div class="col-md-6">
+                  <img src="{% static 'scanmonitoring/img/bagas.jpeg' %}" alt="" style="height: 70px; width: 70px; border-radius: 50%; margin-left: 10px;">
+                  <h5 class="card-title" style="margin-left: 15px; margin-top: 5px;">Bagas</h5>
+                </div>
+                <div class="col-md-6">
+                  <h5>Total Files</h5>
+                  <p class="card-text display-6">
+                    {{ latest_personal.bagas }}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
           <div class="card card-custom card-yellow">
             <div class="card-body">
-              <h5 class="card-title">Large Files</h5>
-              <p class="card-text display-6">
-                {{ latest_stat.total_large_file }}
-              </p>
+              <div class="row">
+                <div class="col-md-6">
+                  <img src="{% static 'scanmonitoring/img/nia.jpeg' %}" alt="" style="height: 70px; width: 70px; border-radius: 50%; margin-left: 10px;">
+                  <h5 class="card-title" style="margin-left: 26px; margin-top: 5px;">Nia</h5>
+                </div>
+                <div class="col-md-6">
+                  <h5>Total Files</h5>
+                  <p class="card-text display-6">
+                    {{ latest_personal.nia }}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
           <!-- <div class="card card-custom card-red">
@@ -106,32 +136,45 @@
           </div> -->
           <div class="card card-custom card-purple">
             <div class="card-body">
-              <h5 class="card-title">Not a PDF</h5>
-              <p class="card-text display-6">
-                {{ latest_stat.total_not_a_pdf }}
-              </p>
+              <div class="row">
+                <div class="col-md-6">
+                  <img src="{% static 'scanmonitoring/img/nathan.jpeg' %}" alt="" style="height: 70px; width: 70px; border-radius: 50%; margin-left: 10px;">
+                  <h5 class="card-title" style="margin-left: 14px; margin-top: 5px;">Nathan</h5>
+                </div>
+                <div class="col-md-6">
+                  <h5>Total Files</h5>
+                  <p class="card-text display-6">
+                    {{ latest_personal.nathan }}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="card card-custom card-red">
+          <!-- <div class="card card-custom card-red">
             <div class="card-body">
               <h5 class="card-title">Uncategorized Files</h5>
               <p class="card-text display-6">
                 {{ latest_stat.total_uncategories }}
               </p>
             </div>
-          </div>
+          </div> -->
 
  
         </div>
-        <div class="col-md-10 pt-5">
+        <div class="col-md-9 pt-5">
             <canvas id="monitoringChart" width="800" height="400"></canvas>
-            <form action=""  method="get">
-              <button type="submit" src="" class="btn btn-success mt-5">View Personal Progress</button>
-            </form>
+            <button type="button" src="" class="btn btn-success mt-5">View All Stats</button>
         </div>
       </div>
       
     </div>
+    <!-- <div class="container mt-5">
+      <div class="row">
+        <div class="col-md-2">
+          <img src="{% static 'scanmonitoring/img/nathan.jpeg' %}" alt="" class="img-fluid rounded-circle" style="height: 100px; width: 100px;">
+        </div>
+      </div>
+    </div> -->
 
     <script>
 

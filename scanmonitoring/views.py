@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import FileRecord
 from .models import MonitoringLog
+from .models import MonitoringPersonal
 from django.http import JsonResponse
 
 # Create your views here.
@@ -19,6 +20,16 @@ def dashboard_view(request):
         'latest_stat': latest_stat,
     }
     return render(request, 'scanmonitoring\dashboard2.html', context)
+
+def dashboard3_view(request):
+    latest_stat = MonitoringLog.objects.latest('timestamp')  # entry for monitoringLog
+    latest_personal = MonitoringPersonal.objects.latest('jedawaktu')
+    context = {
+        'latest_stat': latest_stat,
+        'latest_personal': latest_personal
+    }
+    
+    return render(request, 'scanmonitoring\dashboard3.html', context)
 
 def dashboard_page(request):
     stats = MonitoringLog.objects.order_by('-timestamp')[:10]  # Fetch last 10 entries for the cards

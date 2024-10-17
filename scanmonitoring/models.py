@@ -20,3 +20,14 @@ class MonitoringLog(models.Model):
 
     def __str__(self):
         return f'{self.total_files} files at {self.timestamp}'
+
+
+class MonitoringPersonal(models.Model):
+    jedawaktu = models.DateTimeField(auto_now_add=True)
+    ananda = models.IntegerField()
+    bagas = models.IntegerField()
+    nia = models.IntegerField()
+    nathan = models.IntegerField()
+
+    def __str__(self):
+        return f'personal has been added at {self.jedawaktu}'
